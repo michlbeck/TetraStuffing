@@ -40,9 +40,11 @@ sofaLibs:= -L$(sofaLibDir) -lsofa_misc -lsofa_component_misc -lsofacore
 all: shared
 
 shared:
+	mkdir $(outputDir)
 	$(CXX) $(CXXFLAGS) -shared $(dirSrc)/* -o $(outputDir)/$(outputName).so $(sofaLibs) $(ttmLibs)
 
 static:
+	mkdir $(outputDir)
 	$(CXX) $(CXXFLAGS) -c $(dirSrc)/* -o $(outputDir)/$(outputName).o
 	$(AR) rvs $(outputDir)/$(outputName).a $(outputDir)/$(outputName).o
 

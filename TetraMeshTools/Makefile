@@ -10,7 +10,7 @@ incDir:= include
 ttmDir:= include/TetraMeshTools
 
 outputDir:= lib
-outputName:= libTetraMeshTools.so
+outputName:= libTetraMeshTools
 
 CFLAGS:=        -O2 -pipe 
 #CFLAGS+=        -fopenmp
@@ -20,13 +20,25 @@ CFLAGS+=        -I$(incDir)
 CFLAGS+=		-I$(ttmDir)
 CFLAGS+=		-I$(dirTrimesh2)/include
 CFLAGS+=        -fpic
-CFLAGS+=        -shared 
+#CFLAGS+=        -shared 
 
 CXXFLAGS:=      $(CFLAGS)
 
+srcs:= $(wildcard $(dirSrc)/*.cpp) $(wildcard $(dirTrimesh2)/src/*.cc)
+objs:= $(srcs:.cpp=.o)
+objs:= $(objs:.cc=.o)
+
 # make targets
-all:	
-	$(CXX) $(CXXFLAGS) $(dirSrc)/*.cpp $(dirTrimesh2)/src/* -o $(outputDir)/$(outputName)
+all: shared
+
+shared:
+	mkdir $(outputDir)
+	$(CXX) $(CXXFLAGS) -shared $(dirSrc)/*.cpp $(dirTrimesh2)/src/* -o $(outputDir)/$(outputName).so
+
+static: $(objs)
+	mkdir $(outputDir)
+	$(AR) rvs $(outputDir)/$(outputName).a $(objs)
 	
 clean:
-	rm -rf lib/*
+	rm $(objs)
+	rm -rf $(outputDir)/*
