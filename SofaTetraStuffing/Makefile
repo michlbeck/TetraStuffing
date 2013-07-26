@@ -11,7 +11,7 @@ ttmDir:= ../TetraMeshTools
 ttmLibDir:= $(ttmDir)/lib
 
 # SOFA root dir (change to where your own SOFA instance is living)
-sofaDir:= ../Sofa/Sofa
+sofaDir:= ../../../../../Sofa/Sofa
 sofaLibDir:=$(sofaDir)/lib
 
 outputDir:= lib
@@ -40,11 +40,11 @@ sofaLibs:= -L$(sofaLibDir) -lsofa_misc -lsofa_component_misc -lsofacore
 all: shared
 
 shared:
-	mkdir $(outputDir)
+	mkdir -p $(outputDir)
 	$(CXX) $(CXXFLAGS) -shared $(dirSrc)/* -o $(outputDir)/$(outputName).so $(sofaLibs) $(ttmLibs)
 
 static:
-	mkdir $(outputDir)
+	mkdir -p $(outputDir)
 	$(CXX) $(CXXFLAGS) -c $(dirSrc)/* -o $(outputDir)/$(outputName).o
 	$(AR) rvs $(outputDir)/$(outputName).a $(outputDir)/$(outputName).o
 

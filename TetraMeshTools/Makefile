@@ -32,12 +32,12 @@ objs:= $(objs:.cc=.o)
 all: shared
 
 shared:
-	mkdir $(outputDir)
+	mkdir -p $(outputDir)
 	$(CXX) $(CXXFLAGS) -shared $(dirSrc)/*.cpp $(dirTrimesh2)/src/* -o $(outputDir)/$(outputName).so
 
 static: $(objs)
-	mkdir $(outputDir)
-	$(AR) rvs $(outputDir)/$(outputName).a $(objs)
+	mkdir -p $(outputDir)
+	$(AR) rs $(outputDir)/$(outputName).a $(objs)
 	
 clean:
 	rm $(objs)
